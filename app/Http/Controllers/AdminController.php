@@ -198,4 +198,12 @@ class AdminController extends Controller
         
     }
 
+
+    public function reportProject(){
+
+        $data = Project::all();
+
+        return view('pages.reportProject', \compact('data'));
+    }
+
 }

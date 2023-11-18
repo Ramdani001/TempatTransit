@@ -46,6 +46,12 @@
                 <span class="title"> Client Order</span>
             </a>
         </li>
+        <li>
+            <a href="/reportProject">
+                <span class="icon"><ion-icon name="library-outline"></ion-icon></span>
+                <span class="title"> Report Project</span>
+            </a>
+        </li>
         @endif
 
         <li>

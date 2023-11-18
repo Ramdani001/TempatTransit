@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
     Route::get('/project', [AdminController::class, 'project']);
     Route::get('/client', [AdminController::class, 'client'])->name('pages.client');
+    Route::get('/reportProject', [AdminController::class, 'reportProject'])->name('pages.reportProject');
 
     // Route Pages
     Route::get('/admin/projectmanager/approvalclient', [AdminController::class, 'approval'])->name('pages.approval');

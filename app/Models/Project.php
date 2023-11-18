@@ -20,6 +20,10 @@ class Project extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function pmUser(){
+        return $this->belongsTo(User::class, 'pm_id', 'id');
+    }
+
     public function client(){
         return $this->belongsTo(Client::class, 'client_id', 'id');
 
