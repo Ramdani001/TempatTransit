@@ -1,0 +1,27 @@
+Users
+-user_id
+-name
+-email
+-password
+-Role
+	> Project Manager
+	> Employee
+	> Marketing
+
+Project
+-id_project
+-(fk) user_id
+-(fk) id_client
+
+
+Client
+-id_client
+-name
+-no
+-email
+-address
+-details
+-prices
+
+
+
