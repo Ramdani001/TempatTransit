@@ -425,13 +425,19 @@ body{
 }
 
 .recentCostumers {
-    position: relative;
     display: grid;
-    min-height: 500px;
     padding: 20px;
+    min-height: 500px;
+    position: relative;
+    overflow-wrap: break-word;
+    border-radius: 20px;
     background: var(--white);
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
+}
+
+.recentCostumers .cardHeader{
+    padding: 5px 15px;
+    position:absolute;
 }
 
 .recentCostumers .imgBox {

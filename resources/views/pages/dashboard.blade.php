@@ -48,7 +48,7 @@
 {{-- === Order List === --}}
 
 <div class="details">
-    <div class="recentOrders">
+    <div class="recentOrders"> 
         <div class="cardHeader">
             <h2>Recent Order</h2>
             <a href="#" class="btn">View All</a>
@@ -84,70 +84,18 @@
         <div class="cardHeader">
             <h2>Recent Costumer</h2>
         </div>
-    <table>
-        <tr>
-            <td width="60px">
-                <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
-            </td>
-            <td>
-                <h4>David Wilson <br> <span>Polandia</span></h4>
-            </td>
-        </tr>
-        
-        <tr>
-            <td width="60px">
-                <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
-            </td>
-            <td>
-                <h4>David Wilson <br> <span>Polandia</span></h4>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="60px">
-                <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
-            </td>
-            <td>
-                <h4>David Wilson <br> <span>Polandia</span></h4>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="60px">
-                <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
-            </td>
-            <td>
-                <h4>David Wilson <br> <span>Polandia</span></h4>
-            </td>
-        </tr>
-        
-        <tr>
-            <td width="60px">
-                <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
-            </td>
-            <td>
-                <h4>David Wilson <br> <span>Polandia</span></h4>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="60px">
-                <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
-            </td>
-            <td>
-                <h4>David Wilson <br> <span>Polandia</span></h4>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="60px">
-                <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
-            </td>
-            <td>
-                <h4>David Wilson <br> <span>Polandia</span></h4>
-            </td>
-        </tr>
-    </table>
+        <table>
+            @foreach ($clientpro as $item)
+                <tr>
+                    <td width="60px">
+                        <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
+                    </td>
+                    <td>
+                        <h4>{{ $item->name }} <br> <span> {{ $item->details }} </span></h4>
+                    </td>
+                </tr>
+            @endforeach
+        </table>
     </div>
 </div>
 </div>

@@ -17,11 +17,20 @@
                         <td> : </td>
                         <td> {{ $item->client->details }} </td>
                     </tr>
+                    @php
+                        $role = Auth::user()->role;
+                    @endphp
                     <tr>
                         <td class="w-36 font-semibold">Status Project </td>
                         <td> : </td>
                         <td>
-                            <select name="statusProject" id="statusProject" class="px-3">
+                            <select name="statusProject" id="statusProject" class="px-3" 
+                                    @if($role == "Employee")
+                                        @if($item->status == "Accepted")
+                                            disabled
+                                        @endif
+                                    @endif 
+                                >
                                 @if (Auth::user()->role == "Project Manager")
                                     @if ($item->status == "Done")
                                         
@@ -30,10 +39,10 @@
                                         <option> Accepted </option>
 
                                     @elseif ($item->status == "Rejected")
+                                        <option > On Progres </option>
                                         <option> Done </option>
                                         <option selected> Rejected </option>
-                                        <option> Accepted </option>
-
+                                            <option> Accepted </option>
                                     @elseif ($item->status == "Accepted")
                                         <option> Done </option>
                                         <option> Rejected </option>
@@ -46,14 +55,18 @@
                                     @endif
 
                                 @else
-                                    <option> On Progres </option>
+                                    <option> On Progres </option> 
                                     <option> Done </option>
 
                                     @if ($item->status == "Rejected")
                                         <option selected> Rejected </option>
-                                        <option> Accepted </option>
+                                        @if($role == "Project Manager")
+                                            <option> Accepted </option>
+                                        @endif
                                     @elseif($item->status == "Accepted")
-                                        <option> Rejected </option>
+                                        @if($role == "Project Manager")
+                                            <option> Rejected </option>
+                                        @endif
                                         <option selected> Accepted </option>
                                     @endif
                                 @endif
@@ -63,7 +76,13 @@
                @endforeach
             </table>
             @if (Auth::user()->role != "Project Manager")
-                <div class="">
+                <div class="" 
+                @if($role == "Employee")
+                    @if($item->status == "Accepted")
+                        hidden                        
+                    @endif
+                @endif
+                >
                     <h2 class="text-center font-semibold">Work In Today</h2>
                     <form action="{{ '/admin/insertJob' }}" method="post" class="p-3">
                         @csrf
@@ -138,5 +157,7 @@
         </div>
 
     </div>
+
+    
 
 @endsection

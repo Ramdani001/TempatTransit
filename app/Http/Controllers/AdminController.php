@@ -18,10 +18,28 @@ class AdminController extends Controller
 
     public function dashboard(){
         $clients = Client::all();
-        $totproject = Project::where('status', 'On Progress')->count();
-        $totclient = Client::count();
+        
+        if(Auth::user()->role == "Employee" ){
+            $totproject = Project::where('status', '!=', 'Pending')
+            ->where('user_id', Auth::user()->id)
+            ->count();
+            $totclient = Client::count();
+        }else{
+            $totproject = Project::where('status', '!=' ,'Pending')->count();
+            $totclient = Client::count();
+        }
+
         $employees = User::where('id', '!=', 6)->count();
-        $projects = Project::where('status', 'On Progress')->get();
+
+        if(Auth::user()->role == "Employee"){
+            $projects = Project::where('status', '!=','Pending')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+        }else{
+            $projects = Project::where('status', '!=','Pending')->get();
+        }
+
+
         $clientpro = Client::with('project')->get();
         $userpro = User::with('project')->get();
 
@@ -116,6 +134,7 @@ class AdminController extends Controller
         $id = $request->v_id;
         $affected = Project::where('client_id', $id)
             ->update([
+            'pm_id'=> Auth::user()->id,
             'user_id'=> $request->programmer,
             'status'=> 'On Progress'
             ]);
@@ -141,6 +160,7 @@ class AdminController extends Controller
         
         $affected = Project::where('id', $request->idUser)
             ->update([
+            'taskdescription'=> $request->descJob,
             'status'=> $request->sendStatus,
         ]);
 
@@ -148,7 +168,7 @@ class AdminController extends Controller
             ->update([
             'status' => $request->sendStatus
         ]);
-
+ 
 
         $insert = new ProgresModels;
         $insert-> project_id = $request->idUser;

@@ -60,4 +60,98 @@ function evaluasiFunct(){
         $('#sendStatus').val($send);
         $('#sendStatus1').val($send);
     });
+
+    // Filter
+    $('.dropListFilter').on('click', function() {
+        console.log('Value Click = ', $(this).val());
+
+        $value = $(this).val();
+
+        if($value == "Tahun"){
+            console.log("Periode Aktif");
+            $('#compTahun').removeClass('hidden');
+            $('#compBulan').addClass('hidden');
+            $('#compPeriode').addClass('hidden');
+
+            $('#submitFilter').removeClass('hidden');
+
+            $('#submitFilter').val($value);
+
+
+        }else if($value == "Bulan"){
+            $('#compTahun').removeClass('hidden');
+            $('#compBulan').removeClass('hidden');
+            $('#compPeriode').addClass('hidden');
+            
+            $('#submitFilter').removeClass('hidden');
+            $('#submitFilter').val($value);
+        }else if($value == "Periode"){
+            $('#compTahun').addClass('hidden');
+            $('#compBulan').addClass('hidden');
+            $('#compPeriode').removeClass('hidden');
+
+            $('#submitFilter').removeClass('hidden');
+            $('#submitFilter').val($value);
+        }else{
+ 
+            // ==
+            $('#fullTable').toggle('hidden');
+            $('#tableFilter').toggle('hidden');
+            // ==
+
+            $('#compTahun').addClass('hidden');
+            $('#compBulan').addClass('hidden');
+            $('#compPeriode').addClass('hidden');
+
+            $('#submitFilter').addClass('hidden');
+            $('#submitFilter').val($value);
+        }
+    });
+
+    $('#submitFilter').on('click', function() {
+        console.log("Value Button = ",$(this).val());
+
+        $value = $(this).val();
+
+        if($value == "Tahun"){
+
+            $tahun = $('#filterTahun').val();
+
+            console.log("Send Data Tahun", $tahun);
+
+            // ==
+            $('#fullTable').addClass('hidden');
+            $('#tableFilter').removeClass('hidden');
+            // ==
+
+        }else if($value == "Bulan"){
+
+            $tahun = $('#filterTahun').val();
+            $bulan = $('#filterBulan').val();
+
+            console.log("Send Data Bulan", $tahun, $bulan);
+
+            // ==
+            $('#fullTable').addClass('hidden');
+            $('#tableFilter').removeClass('hidden');
+            // ==
+
+        }else if($value == "Periode"){
+
+            $dateFrom = $('#dateFrom').val();
+            $dateTo = $('#dateTo').val();
+
+            console.log("Send Data Periode", $dateFrom ," s/d ", $dateTo);
+
+            // ==
+            $('#fullTable').addClass('hidden');
+            $('#tableFilter').removeClass('hidden');
+            // ==
+
+        }else{
+
+        }
+
+    });
+
 </script>

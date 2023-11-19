@@ -33,15 +33,16 @@
                         <th>Task</th>
                         <th>Task Description</th>
                         <th>Actions</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 
                 @foreach ($project as $client)
-                <tr class="">
+                <tr class=""> 
                     @if (Auth::user()->role == 'Project Manager')
                         <td> {{ $client->user->name }} </td>    
                     @endif
-
+ 
                     <td >{{ $client->client->details }}</td>
                     <td >{{ $client->taskdescription }}</td>
                     <td>
@@ -52,6 +53,12 @@
                                 Detail
                             </button>
                         </form>
+                    </td>
+                    @php
+                        $valueStat = $client->status;
+                    @endphp
+                    <td class="@if($valueStat == 'On Progres') text-yellow-500 @elseif($valueStat == "Pending") text-gray-500 @elseif($valueStat == "Done") text-blue-500 @elseif($valueStat == "Accepted") text-green-500 @elseif($valueStat == "Rejected") text-red-500 @elseif($valueStat == 'On Progress') text-yellow-500 @endif">
+                        {{ $client->status }}
                     </td>
                 </tr>
                 @endforeach
