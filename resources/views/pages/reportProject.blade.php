@@ -22,7 +22,7 @@
                 </div>
                 {{-- Bulan --}}
                 <div class="relative mx-2 hidden" id="compBulan">
-                    <select name="filterBulan" id="filterBulan" class="block appearance-none w-full bg-white border border-gray-300 py-2 px-4 rounded-md shadow-sm focus:outline-none focus:border-blue-500">
+                    <select name="filterBulan" id="filterBulan" class="pr-9 block appearance-none w-full bg-white border border-gray-300 py-2 px-4 rounded-md shadow-sm focus:outline-none focus:border-blue-500">
                         @php
                             $months = [
                                 'January', 'February', 'March', 'April', 'May', 'June', 'July',
@@ -111,6 +111,9 @@
        </div>
 
         <div id="tableFilter" class="hidden">
+            <div id="printer">
+
+            </div>
             @php
                 $price = 1500000;
             @endphp
@@ -123,15 +126,12 @@
                         <div class="w-full">Programmer</div>
                         <div class=" text-left w-full">Price</div>
                     </div>
-                    @for ($i=1; $i < 30; $i++)
+                    <div class="flex flex-col recordData"  id="">
                         <div class="flex justify-between w-full px-4">
-                            <span class="w-full text-left"> {{ $i }} </span>
-                            <span class="w-full text-left">Portal Berita</span>
-                            <span class="w-full text-left">Bill Wilson</span>
-                            <span class="w-full text-left">Jumanji</span>
-                            <span class="w-full text-left">Rp. {{ number_format($price, 0, ',', '.') }}</span>
+                            
+                            {{-- Rp. {{ number_format($price, 0, ',', '.') }} --}}
                         </div>
-                    @endfor
+                    </div>
                 </div>
             </div>
 
@@ -139,8 +139,8 @@
                 <span class="">
                     Total : 
                 </span>
-                <span class="w-[190px]">
-                    Rp. {{ number_format($price, 0, ',', '.') }}
+                <span class="w-[190px] totalRekapHarga" id="">
+                    
                 </span>
             </div>
         </div>

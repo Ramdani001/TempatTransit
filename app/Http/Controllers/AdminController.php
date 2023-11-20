@@ -226,4 +226,67 @@ class AdminController extends Controller
         return view('pages.reportProject', \compact('data'));
     }
 
+    // Filter Report Project
+    
+    public function filterReport(Request $request){
+        $status = $request->status;
+
+
+        if($status == "Tahun"){
+            
+            $tahun = $request->tahun;
+
+            $filterTahun = Project::leftJoin('users', 'project.user_id', '=', 'users.id')
+            ->leftJoin('users as pm_users', 'project.pm_id', '=', 'pm_users.id')
+            ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
+            ->select(
+                'project.*', // Kolom dari tabel projects
+                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
+                'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
+                'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
+            )
+            ->whereYear('project.created_at', $tahun)
+            ->get();
+
+            return response()->json([
+                'status'=> 200,
+                'filterTahun' => $filterTahun
+            ]);
+
+        }else if($status == "Bulan"){
+            
+            $tahun = $request->tahun;
+            $bulan = $request->bulan;
+
+            $filterBulan = Project::whereYear('created_at', $tahun)
+            ->whereMonth('created_at', $bulan)
+            ->get();
+
+
+            return response()->json([
+                'status'=> 200,
+                'filterBulan' => $filterBulan
+            ]);
+
+        }else if($status == "Periode"){
+
+            $dateFrom = $request->dateFrom;
+            $dateTo = $request->dateTo;
+
+            $filterTanggal = Project::whereRaw("DATE(created_at) BETWEEN ? AND ?", [$dateFrom, $dateTo])
+            ->get();
+
+            return response()->json([
+                'status'=> 200,
+                'filterTanggal' => $filterTanggal
+            ]);
+            
+        }
+
+
+    }
+
+    // Filter Report Project
+
 }

@@ -124,6 +124,61 @@ function evaluasiFunct(){
             $('#tableFilter').removeClass('hidden');
             // ==
 
+            var sendData = {
+                tahun: $tahun,
+                status: "Tahun",
+                _token: '{{ csrf_token() }}' 
+            };
+
+            // Request Data
+            $.ajax({  
+            type: "POST",
+            data: sendData,
+            url: "/admin/filterReport",
+            success: function(response){
+                console.log(response.filterTahun);
+                $(".recordData").empty();
+                $(".totalRekapHarga").empty();
+                $("#printer").empty();
+                
+                $("#printer").append('<a href="/print/?tahun='+$tahun+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
+
+                response.filterTahun.forEach(function(data, index) {
+                    // console.log(data.pmUser.email);
+                    // Menambahkan elemen span ke dalam div menggunakan jQuery
+                $(".recordData").append('<div class="flex justify-between w-full px-4 border-b mb-3 isiTable'+ (index +1) +'"></div>');
+                    // document.getElementById('namaProject-' + index).innerText = data.pmUser.name;
+                    // document.getElementById('projectManager-' + index).innerText = data.projectManager;
+                    // document.getElementById('employee-' + index).innerText = data.employeeName;
+                    // document.getElementById('prices-' + index).innerText = 'Rp. ' + data.formattedPrice;
+                });
+                var totalPrices = 0;
+                response.filterTahun.forEach(function(data, index) {
+                    var formattedPrice = new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(data.prices);
+
+                    // Menambahkan elemen span ke dalam div menggunakan jQuery
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="noFil">' + (index + 1) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id=projectFil">' + data.judulProject + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.projectManager + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.employee + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formattedPrice  + '</span>');
+                    totalPrices += Number(data.prices);
+                });
+                var formatTotalPrices = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(totalPrices);
+
+                $('.totalRekapHarga').append(formatTotalPrices);
+                console.log('Jumlah = ', formatTotalPrices);
+
+            }
+        })
+            // Request Data
+
         }else if($value == "Bulan"){
 
             $tahun = $('#filterTahun').val();
@@ -135,6 +190,24 @@ function evaluasiFunct(){
             $('#fullTable').addClass('hidden');
             $('#tableFilter').removeClass('hidden');
             // ==
+
+            
+            var sendData = {
+                tahun: $tahun,
+                bulan: $bulan,
+                status: "Bulan",
+                _token: '{{ csrf_token() }}' 
+            };
+
+            // Request Data
+            $.ajax({  
+            type: "POST",
+            data: sendData,
+            url: "/admin/filterReport",
+            success: function(response){  
+                console.log(response);
+            }
+        })
 
         }else if($value == "Periode"){
 
@@ -148,10 +221,30 @@ function evaluasiFunct(){
             $('#tableFilter').removeClass('hidden');
             // ==
 
+            
+            var sendData = {
+                dateFrom: $dateFrom,
+                dateTo: $dateTo,
+                status: "Periode",
+                _token: '{{ csrf_token() }}' 
+            };
+
+            // Request Data
+            $.ajax({  
+            type: "POST",
+            data: sendData,
+            url: "/admin/filterReport",
+            success: function(response){  
+                console.log(response);
+            }
+        })
+
         }else{
 
         }
 
     });
+
+    
 
 </script>

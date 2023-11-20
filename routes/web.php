@@ -43,6 +43,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/admin/insertJob', [AdminController::class, 'insertJob'])->name('admin.insertJob');
 
     Route::post('/admin/insertEvaluasi', [AdminController::class, 'insertEvaluasi'])->name('admin.insertEvaluasi');
+    
+    // Filter Report Project
+    Route::post('/admin/filterReport', [AdminController::class, 'filterReport'])->name('admin.filterReport');
+
 
     // Logout
     Route::get('/logout', [SesiController::class, 'logout']);
