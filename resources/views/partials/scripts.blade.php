@@ -50,7 +50,7 @@ function evaluasiFunct(){
     $(document).ready(function() {
         $oldStatus = $('#statusProject').val();
 
-        $('#sendStatus').val($oldStatus);
+        // $('#sendStatus').val($oldStatus);
         $('#sendStatus1').val($oldStatus);
     })
 
@@ -141,16 +141,10 @@ function evaluasiFunct(){
                 $(".totalRekapHarga").empty();
                 $("#printer").empty();
                 
-                $("#printer").append('<a href="/print/?tahun='+$tahun+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
+                $("#printer").append('<a href="/print/tahun/'+$tahun+'/0" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
 
                 response.filterTahun.forEach(function(data, index) {
-                    // console.log(data.pmUser.email);
-                    // Menambahkan elemen span ke dalam div menggunakan jQuery
                 $(".recordData").append('<div class="flex justify-between w-full px-4 border-b mb-3 isiTable'+ (index +1) +'"></div>');
-                    // document.getElementById('namaProject-' + index).innerText = data.pmUser.name;
-                    // document.getElementById('projectManager-' + index).innerText = data.projectManager;
-                    // document.getElementById('employee-' + index).innerText = data.employeeName;
-                    // document.getElementById('prices-' + index).innerText = 'Rp. ' + data.formattedPrice;
                 });
                 var totalPrices = 0;
                 response.filterTahun.forEach(function(data, index) {
@@ -159,11 +153,31 @@ function evaluasiFunct(){
                         currency: 'IDR'
                     }).format(data.prices);
 
+                    function formatDate(inputDate) {
+                        var date = new Date(inputDate);
+                        var month1 = ['January', 'February', 'March', 'April', 'May', 'Juny', 'July', 'August', 'September', 'October', 'November', 'December'];
+                        var day = date.getDate();
+                        var month = month1[date.getMonth()]; // Bulan dimulai dari 0, jadi tambahkan 1
+                        var year = date.getFullYear();
+
+                        // Format tanggal dan bulan agar selalu dua digit
+                        if (day < 10) {
+                            day = '0' + day;
+                        }
+                        if (month < 10) {
+                            month = '0' + month;
+                        }
+
+                        return day + '-' + month + '-' + year;
+                    }
+                    console.log(formatDate(2023-11-23));
+
                     // Menambahkan elemen span ke dalam div menggunakan jQuery
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="noFil">' + (index + 1) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left w-[30%]" id="noFil">' + (index + 1) + '</span>');
                     $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id=projectFil">' + data.judulProject + '</span>');
                     $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.projectManager + '</span>');
                     $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.employee + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formatDate(data.updated_at) + '</span>');
                     $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formattedPrice  + '</span>');
                     totalPrices += Number(data.prices);
                 });
@@ -205,7 +219,38 @@ function evaluasiFunct(){
             data: sendData,
             url: "/admin/filterReport",
             success: function(response){  
-                console.log(response);
+                console.log(response.filterBulan);
+                $(".recordData").empty();
+                $(".totalRekapHarga").empty();
+                $("#printer").empty();
+                
+                $("#printer").append('<a href="/print/bulan/'+$tahun+'/'+$bulan+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
+
+                response.filterBulan.forEach(function(data, index) {
+                $(".recordData").append('<div class="flex justify-between w-full px-4 border-b mb-3 isiTable'+ (index +1) +'"></div>');
+                });
+                var totalPrices = 0;
+                response.filterBulan.forEach(function(data, index) {
+                    var formattedPrice = new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(data.prices);
+
+                    // Menambahkan elemen span ke dalam div menggunakan jQuery
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left w-[30%]" id="noFil">' + (index + 1) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id=projectFil">' + data.judulProject + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.projectManager + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.employee + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formattedPrice  + '</span>');
+                    totalPrices += Number(data.prices);
+                });
+                var formatTotalPrices = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(totalPrices);
+
+                $('.totalRekapHarga').append(formatTotalPrices);
+                console.log('Jumlah = ', formatTotalPrices);
             }
         })
 
@@ -235,12 +280,45 @@ function evaluasiFunct(){
             data: sendData,
             url: "/admin/filterReport",
             success: function(response){  
-                console.log(response);
+                console.log(response.filterTanggal);
+                $(".recordData").empty();
+                $(".totalRekapHarga").empty();
+                $("#printer").empty();
+                
+                $("#printer").append('<a href="/print/periode/'+$dateFrom+'/'+$dateTo+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
+
+                response.filterTanggal.forEach(function(data, index) {
+                $(".recordData").append('<div class="flex justify-between w-full px-4 border-b mb-3 isiTable'+ (index +1) +'"></div>');
+                });
+                var totalPrices = 0;
+                response.filterTanggal.forEach(function(data, index) {
+                    var formattedPrice = new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(data.prices);
+
+                    // Menambahkan elemen span ke dalam div menggunakan jQuery
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left w-[30%]" id="noFil ">' + (index + 1) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id=projectFil">' + data.judulProject + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.projectManager + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.employee + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formattedPrice  + '</span>');
+                    totalPrices += Number(data.prices);
+                });
+                var formatTotalPrices = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(totalPrices);
+
+                $('.totalRekapHarga').append(formatTotalPrices);
+                console.log('Jumlah = ', formatTotalPrices);
             }
         })
 
         }else{
-
+            $(".recordData").empty();
+            $(".totalRekapHarga").empty();
+            $("#printer").empty();
         }
 
     });

@@ -1,7 +1,7 @@
 @extends('pages.cpanel')
 
 @section('content')
-    @if (Auth::user()->role == 'Programmer')  
+    {{-- @if (Auth::user()->role == 'Employee')   --}}
         <div class="todolist">
             <div class="todo">
                 <div class="tdl">
@@ -13,21 +13,21 @@
                 </div>
             </div>
         </div>
-    @endif
+    {{-- @endif --}}
     <div class="details" style="grid:none !important;">
         <div class="recentOrders">
             <div class="cardHeader">
                 @if (Auth::user() == 'Programmer')
                     <h2>Job Description</h2>
                 @else
-                    <h2>Project Progres</h2>
+                    <h2>Project Progress</h2>
                 @endif
             </div>
             <table id="example" class="display" style="width:100%">
                 <thead> 
                     <tr>
                         @if (Auth::user()->role == 'Project Manager')
-                            <th>Employee</th>    
+                            <th>Programmer</th>    
                         @endif
                         
                         <th>Task</th>
@@ -57,9 +57,33 @@
                     @php
                         $valueStat = $client->status;
                     @endphp
-                    <td class="@if($valueStat == 'On Progres') text-yellow-500 @elseif($valueStat == "Pending") text-gray-500 @elseif($valueStat == "Done") text-blue-500 @elseif($valueStat == "Accepted") text-green-500 @elseif($valueStat == "Rejected") text-red-500 @elseif($valueStat == 'On Progress') text-yellow-500 @endif">
-                        {{ $client->status }}
+                    <td>
+                        <form action="{{ '/admin/trigerStat' }}" method="post">
+                            @csrf
+                            <input type="text" name="trigerText" id="trigerText" value="{{ $client->client_id }}" hidden>
+                            <button class="
+                                @if ($valueStat == "Requested")
+                                    statRequested
+                                @elseif($valueStat == "On Progress")
+                                    statProgres
+                                @elseif ($valueStat == "Done")
+                                    statDone                        
+                                @elseif ($valueStat == "Rejected")
+                                    statRejected    
+                                @endif " 
+                                type="submit"
+                                style="cursor: pointer;"
+                                @if($valueStat != 'On Progress' )
+                                    disabled
+                                @endif
+                            >
+                                {{ $client->status }}
+                            </button>
+                        </form>
                     </td>
+                    {{-- <td class="@if($valueStat == 'On Progres') text-yellow-500 @elseif($valueStat == "Pending") text-gray-500 @elseif($valueStat == "Done") text-green-500 @elseif($valueStat == "Requested") text-blue-500 @elseif($valueStat == "Rejected") text-red-500 @elseif($valueStat == 'On Progress') text-yellow-500 @endif">
+                        {{ $client->status }}
+                    </td> --}}
                 </tr>
                 @endforeach
             </table>

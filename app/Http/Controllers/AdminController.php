@@ -20,23 +20,26 @@ class AdminController extends Controller
         $clients = Client::all();
         
         if(Auth::user()->role == "Employee" ){
-            $totproject = Project::where('status', '!=', 'Pending')
+            $totproject = Project::where('status', '!=', 'Rejected')
             ->where('user_id', Auth::user()->id)
             ->count();
-            $totclient = Client::count();
+            $totclient = Client::where('status', '!=', 'Rejected')
+            ->where('id', Auth::user()->id)
+            ->count();
         }else{
-            $totproject = Project::where('status', '!=' ,'Pending')->count();
-            $totclient = Client::count();
+            $totproject = Project::where('status', '!=' ,'Rejected')->count();
+            $totclient = Client::where('status', '!=', 'Rejected')
+            ->count();
         }
 
         $employees = User::where('id', '!=', 6)->count();
 
         if(Auth::user()->role == "Employee"){
-            $projects = Project::where('status', '!=','Pending')
+            $projects = Project::where('status', '!=','Rejected')
             ->where('user_id', Auth::user()->id)
             ->get();
         }else{
-            $projects = Project::where('status', '!=','Pending')->get();
+            $projects = Project::where('status', '!=','Rejected')->get();
         }
 
 
@@ -51,7 +54,7 @@ class AdminController extends Controller
     }
 
     public function project(){
-        $userID = Auth::id();
+        $userID = Auth::user()->id;
         $clients = User::all();
         $project = Project::where('user_id', $userID)->get();
         $projects = Project::with('user')->get();
@@ -79,9 +82,14 @@ class AdminController extends Controller
 
     public function progres(){
         $roles = User::all();
+        // $id = Auth::user()->id;
         $clients = Client::all();
         $rolesID = Project::where('client_id')->get();
-        $project = Project::where('status', '!=', 'Pending')->get();
+        $project = Project::where('status', '!=', 'Pending')
+        ->where('pm_id', Auth::user()->id)
+        ->get();
+
+        // dd($project);
 
         return view('pages.project', \compact('clients', 'roles', 'project'));
  
@@ -173,7 +181,8 @@ class AdminController extends Controller
         $insert = new ProgresModels;
         $insert-> project_id = $request->idUser;
         $insert-> deskripsi = $request->descJob;
-        $insert-> role = 'Employe';
+        $insert-> role = 'Employee';
+        $insert-> name = $request->name;
         $insert->save();
 
         $data = Project::where('id', $request->idUser)->get();
@@ -206,6 +215,7 @@ class AdminController extends Controller
         $insert-> project_id = $idProgres;
         $insert-> deskripsi = $EvaluasiText;
         $insert-> role = "Project Manager";
+        $insert-> name = $request->name;
         $insert->save();
 
         $data = Project::where('id', $idProgres)->get();
@@ -230,6 +240,7 @@ class AdminController extends Controller
     
     public function filterReport(Request $request){
         $status = $request->status;
+        // $status = "Bulan";
 
 
         if($status == "Tahun"){
@@ -246,7 +257,8 @@ class AdminController extends Controller
                 'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
             )
-            ->whereYear('project.created_at', $tahun)
+            ->whereYear('project.updated_at', $tahun)
+            ->where('project.status', "Done")
             ->get();
 
             return response()->json([
@@ -259,10 +271,21 @@ class AdminController extends Controller
             $tahun = $request->tahun;
             $bulan = $request->bulan;
 
-            $filterBulan = Project::whereYear('created_at', $tahun)
-            ->whereMonth('created_at', $bulan)
+            $filterBulan = Project::leftJoin('users', 'project.user_id', '=', 'users.id')
+            ->leftJoin('users as pm_users', 'project.pm_id', '=', 'pm_users.id')
+            ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
+            ->select(
+                'project.*', // Kolom dari tabel projects
+                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
+                'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
+                'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
+            )
+            ->whereYear('project.created_at', $tahun)
+            ->whereMonth('project.created_at', $bulan)
             ->get();
-
+            
+            // dd($filterBulan);
 
             return response()->json([
                 'status'=> 200,
@@ -274,7 +297,17 @@ class AdminController extends Controller
             $dateFrom = $request->dateFrom;
             $dateTo = $request->dateTo;
 
-            $filterTanggal = Project::whereRaw("DATE(created_at) BETWEEN ? AND ?", [$dateFrom, $dateTo])
+            $filterTanggal = Project::leftJoin('users', 'project.user_id', '=', 'users.id')
+            ->leftJoin('users as pm_users', 'project.pm_id', '=', 'pm_users.id')
+            ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
+            ->select(
+                'project.*', // Kolom dari tabel projects
+                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
+                'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
+                'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
+            )
+            ->whereRaw("DATE(project.created_at) BETWEEN ? AND ?", [$dateFrom, $dateTo])
             ->get();
 
             return response()->json([
@@ -287,6 +320,65 @@ class AdminController extends Controller
 
     }
 
+    public function print(Request $request){
+
+        $status = $request->status;
+        $value = $request->value;
+        $value1 = $request->value2;
+
+        if($status == "tahun"){
+            $data = Project::leftJoin('users', 'project.user_id', '=', 'users.id')
+            ->leftJoin('users as pm_users', 'project.pm_id', '=', 'pm_users.id')
+            ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
+            ->select(
+                'project.*', // Kolom dari tabel projects
+                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
+                'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
+                'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
+            )
+            ->whereYear('project.created_at', $value)
+            ->get();
+
+            // $pdf = Pdf::loadView('pdf.invoice', $data);
+
+            // return $pdf->stream('Laporan.pdf');
+
+            return view('pages.print', \compact('data'));
+
+        }else if($status == "bulan"){
+            dd($status, $value, $value1);
+        }else if($status == "periode"){
+            dd($status, $value, $value1);
+        }
+        
+
+    }
+
     // Filter Report Project
+
+    public function trigerStat(Request $request){
+        // dd($request->trigerText);
+
+        $cliend_id = $request->trigerText;
+
+        $affected = Project::where('client_id', $cliend_id)
+            ->update([
+            'status'=> 'Requested'
+            ]);
+
+        $cliendAffect = Client::where('id', $cliend_id)
+            ->update([
+            'status'=> 'Requested'
+            ]);
+
+        $roles = User::all();
+        $clients = Client::all();
+        $rolesID = Project::where('client_id')->get();
+        $project = Project::where('status', '!=', 'Pending')->get();
+
+        return back()->with('clients', 'roles', 'project');
+
+    }
 
 }

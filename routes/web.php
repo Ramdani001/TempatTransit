@@ -43,9 +43,12 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/admin/insertJob', [AdminController::class, 'insertJob'])->name('admin.insertJob');
 
     Route::post('/admin/insertEvaluasi', [AdminController::class, 'insertEvaluasi'])->name('admin.insertEvaluasi');
+
+    Route::post('/admin/trigerStat', [AdminController::class, 'trigerStat'])->name('admin.trigerStat');
     
     // Filter Report Project
     Route::post('/admin/filterReport', [AdminController::class, 'filterReport'])->name('admin.filterReport');
+    Route::get('/print/{status}/{value}/{value2}', [AdminController::class, 'print'])->name('admin.print');
 
 
     // Logout

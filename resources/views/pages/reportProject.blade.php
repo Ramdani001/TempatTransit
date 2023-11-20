@@ -86,24 +86,26 @@
             </thead>
             <tbody>
                 @foreach ($data as $item => $value)
-            @php
-                $price = $value->client->prices;
-            @endphp
-                    <tr>
-                        <td> {{ $item+1 }} </td>
-                        <td>{{ $value->client->details }}</td>
-                        <td>
-                            @if (!empty($value->pmUser->name))
-                                {{$value->pmUser->name }}
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td> {{ $value->user->name }} </td>
-                        <td>{{ date('d F Y', strtotime($value->created_at)) }}</td>
+                    @if ($value->status == "Done")
+                        @php
+                            $price = $value->client->prices;
+                        @endphp
+                        <tr>
+                            <td> {{ $item+1 }} </td>
+                            <td>{{ $value->client->details }}</td>
+                            <td>
+                                @if (!empty($value->pmUser->name))
+                                    {{$value->pmUser->name }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td> {{ $value->user->name }} </td>
+                            <td>{{ date('d F Y', strtotime($value->created_at)) }}</td>
 
-                        <td>Rp. {{ number_format($price, 0, ',', '.') }}</td>
-                    </tr>
+                            <td>Rp. {{ number_format($price, 0, ',', '.') }}</td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
            
@@ -119,11 +121,12 @@
             @endphp
             <div class="md:h-96 overflow-auto">
                 <div class="grid grid-rows border-b">
-                    <div class="border-b mb-1 font-bold pb-2 flex justify-between w-full px-4 text-left">
-                        <div class="w-full">No</div>
+                    <div class="border-b mb-1 font-bold pb-2 flex justify-between w-full px-4 text-left w-full">
+                        <div class="w-[30%]">No</div>
                         <div class="w-full">Project</div>
                         <div class="w-full">Project Manager</div>
                         <div class="w-full">Programmer</div>
+                        <div class="w-full">Tanggal</div>
                         <div class=" text-left w-full">Price</div>
                     </div>
                     <div class="flex flex-col recordData"  id="">
