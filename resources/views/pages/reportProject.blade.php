@@ -121,7 +121,7 @@
             @endphp
             <div class="md:h-96 overflow-auto">
                 <div class="grid grid-rows border-b">
-                    <div class="border-b mb-1 font-bold pb-2 flex justify-between w-full px-4 text-left w-full">
+                    <div class="border-b mb-1 font-bold pb-2 flex justify-between px-4 text-left w-full">
                         <div class="w-[30%]">No</div>
                         <div class="w-full">Project</div>
                         <div class="w-full">Project Manager</div>
