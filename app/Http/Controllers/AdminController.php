@@ -47,6 +47,8 @@ class AdminController extends Controller
         if(Auth::user()->role == "Employee"){
             $projects = Project::where('user_id', Auth::user()->id)
             ->get();
+        }else if(Auth::user()->rol == "Project Manager"){
+            $projects = Project::where('pm_id', Auth::user()->id)->get();
         }else{
             $projects = Project::all();
         }
