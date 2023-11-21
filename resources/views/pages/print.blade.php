@@ -39,15 +39,15 @@
         <div id="logoHead">
             <table style="width: 100%;">
                 <tr style="font-size: 25px; ">
-                    <td colspan="2">REKAP PENGHASILAN</td>
-                    <td> </td>
-                    <td style="text-align: right;">
+                    <td >
                         <img src="assets/img/Tempattransit-logo.png" alt="logo" width="400">
                     </td>
+                    <td> </td>
+                    <td style="text-align: right;" colspan="2">REKAP PENGHASILAN</td>
                 </tr>
             </table>
         </div>
-        <div style="line-height: 2px; margin-left: 20px;">
+        <div style="line-height: 2px; margin-left: 20px; text-align: right;">
             <span>
                 Data Periode : 
                 @if ($status == "tahun")
@@ -62,6 +62,7 @@
                 @endif
             </span>
         </div>
+        <hr class="" style="border: 1px solid #919191; margin-top: 30px;">
             {{-- <hr class="" style="margin-bottom: 20px; border: 1px solid #919191;">
             <hr class="" style="margin-bottom: 20px; border: 2px solid #919191; margin-top: -15px;"> --}}
         <div style="

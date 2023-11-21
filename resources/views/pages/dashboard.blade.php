@@ -16,7 +16,11 @@
     
     <div class="card">
         <div>   
-            <div class="numbers">{{ $totclient }}</div>
+            {{-- <div class="numbers">{{ $totclient }}</div> --}}
+            <div class="numbers">
+
+                {{ $totTask }}
+            </div>
             <div class="cardName">Client</div>
         </div>
         <div class="iconBox">
@@ -26,7 +30,7 @@
 
     <div class="card">
         <div>   
-            <div class="numbers">?</div>
+            <div class="numbers"> {{ $totTask }} </div>
             <div class="cardName">Task</div>
         </div>
         <div class="iconBox">
@@ -82,18 +86,38 @@
 
     <div class="recentCostumers">
         <div class="cardHeader">
-            <h2>Recent Costumer</h2>
+            <h2>Recents Costumer</h2>
         </div>
         <table>
             @foreach ($clientpro as $item)
+                @if ($item->user_id == Auth::user()->id)
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
+                        </td>
+                        <td>
+                            <h4>{{ $item->client->name }} <br> <span> {{ $item->status }} </span></h4>
+                        </td>
+                    </tr>
+                @elseif ($item->pm_id == Auth::user()->id )
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
+                        </td>
+                        <td>
+                            <h4>{{ $item->client->name }} <br> <span> {{ $item->status }} </span></h4>
+                        </td>
+                    </tr>
+              @elseif (Auth::user()->role == "Marketing")
                 <tr>
                     <td width="60px">
                         <div class="imgBox"><img src="/assets/img/finn.jpg" ></div>
                     </td>
                     <td>
-                        <h4>{{ $item->name }} <br> <span> {{ $item->details }} </span></h4>
+                        <h4>{{ $item->client->name }} <br> <span> {{ $item->status }} </span></h4>
                     </td>
                 </tr>
+            @endif
             @endforeach
         </table>
     </div>

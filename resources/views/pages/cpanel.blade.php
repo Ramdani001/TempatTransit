@@ -13,7 +13,7 @@
 </head>
 <body>
     {{-- ============= Navigation ============== --}}
-    
+
     @include('layouts.sidebar')
         {{-- ==== Main ==== --}}
         <div class="main">

@@ -25,7 +25,6 @@ class SesiController extends Controller
             'email' => $request->email,
             'password'=> $request->password,
         ];
-
         if(Auth::attempt($infologin)){
            if(Auth::user()->role == 'Project Manager'){
             return redirect('admin/projectmanager');

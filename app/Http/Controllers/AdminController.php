@@ -27,29 +27,37 @@ class AdminController extends Controller
             $totclient = Client::where('status', '!=', 'Rejected')
             ->where('id', Auth::user()->id)
             ->count();
+
+            $totTask = Project::where('status', 'On Progress')
+            ->where('user_id', Auth::user()->id)
+            ->count();
+
         }else{
             $totproject = Project::where('status', '!=' ,'Rejected')->count();
             $totclient = Client::where('status', '!=', 'Rejected')
+            ->count();
+
+            $totTask = Project::where('status', 'On Progress')
+            ->where('pm_id', Auth::user()->id)
             ->count();
         }
 
         $employees = User::where('id', '!=', 6)->count();
 
         if(Auth::user()->role == "Employee"){
-            $projects = Project::where('status', '!=','Rejected')
-            ->where('user_id', Auth::user()->id)
+            $projects = Project::where('user_id', Auth::user()->id)
             ->get();
         }else{
-            $projects = Project::where('status', '!=','Rejected')->get();
+            $projects = Project::all();
         }
 
 
-        $clientpro = Client::with('project')->get();
+        $clientpro = Project::with('client', 'user')->get();
         $userpro = User::with('project')->get();
 
         // dd($totproject);
         
-        return view('pages.dashboard', compact('clients', 'totclient', 'employees', 'projects', 'clientpro', 'userpro', 'totproject'));
+        return view('pages.dashboard', compact('clients', 'totclient', 'employees', 'projects', 'clientpro', 'userpro', 'totproject', 'totTask'));
         
 
     }
@@ -83,7 +91,7 @@ class AdminController extends Controller
 
     public function progres(){
         $roles = User::all();
-        // $id = Auth::user()->id;
+        // $id = Auth::user()->id; 
         $clients = Client::all();
         $rolesID = Project::where('client_id')->get();
         $project = Project::where('status', '!=', 'Pending')

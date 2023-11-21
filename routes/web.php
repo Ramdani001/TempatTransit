@@ -23,7 +23,7 @@ Route::get('/home', function(){
     return redirect('/admin');
 
 });
-
+ 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin', [AdminController::class, 'dashboard']);
     Route::get('/admin/projectmanager', [AdminController::class, 'dashboard'])->middleware('userAkses:Project Manager');
