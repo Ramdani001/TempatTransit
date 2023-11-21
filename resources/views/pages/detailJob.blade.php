@@ -119,33 +119,35 @@
                 <div class="mt-2 ">
                        @if ($progres->count() > 0)
                         @foreach ($progres as $item)
-                        <div class=" bg-gray-400/30 rounded-md w-full h-full p-1 mb-3 grid @if ($item->role == "Project Manager") shadow font-semibold bg-[#15233b] text-white @endif">
+                            @if ($item->deskripsi != null)
+                                <div class=" bg-gray-400/30 rounded-md w-full h-full p-1 mb-3 grid @if ($item->role == "Project Manager") shadow font-semibold bg-[#2a2d31] text-white @endif">
 
-                                <div class="text-[#15233b] w-full p-1 @if ($item->role == "Project Manager") flex flex-row-reverse @else grid grid-cols-2 gap-3 @endif">
-                                    <span class="w-full
-                                    font-bold
-                                    @if($item->role == "Project Manager")
-                                        text-right text-[#19b3ca]
-                                    @else
-                                        text-left
-                                    @endif
-                                    ">
-                                        @if ($item->role == "Project Manager")
-                                            <sup class="text-red-400 ">Evaluasi</sup>
-                                            
-                                            {{ $item->name }}
+                                    <div class="text-[#15233b] w-full p-1 @if ($item->role == "Project Manager") flex flex-row-reverse @else grid grid-cols-2 gap-3 @endif">
+                                        <span class="w-full
+                                        font-bold
+                                        @if($item->role == "Project Manager")
+                                            text-right text-[#19b3ca]
                                         @else
-                                            {{ $item->name }}
+                                            text-left
                                         @endif
-                                    </span>
-                                    <sup class=" pt-4 font-semibold @if ($item->role == "Project Manager") text-white w-full text-left @else text-right @endif">
-                                        {{ $item->created_at }}
-                                    </sup>
+                                        ">
+                                            @if ($item->role == "Project Manager")
+                                                <sup class="text-red-400 ">Evaluasi</sup>
+                                                
+                                                {{ $item->name }}
+                                            @else
+                                                {{ $item->name }}
+                                            @endif
+                                        </span>
+                                        <sup class=" pt-4 font-semibold @if ($item->role == "Project Manager") text-white w-full text-left @else text-right @endif">
+                                            {{ $item->created_at }}
+                                        </sup>
+                                    </div>
+                                    <p class="text-justify p-1 @if ($item->role == "Project Manager") text-end @endif">
+                                        {{ $item->deskripsi }}
+                                    </p>
                                 </div>
-                                <p class="text-justify p-1 @if ($item->role == "Project Manager") text-end @endif">
-                                    {{ $item->deskripsi }}
-                                </p>
-                            </div>
+                            @endif
                         @endforeach
                         
                         @else
@@ -161,7 +163,7 @@
                     <div class="p-3 rounded-md shadow text-white font-semibold border-t">
                         <form action=" {{ '/admin/insertEvaluasi' }} " method="post" class="">
                             @csrf
-
+ 
                             @foreach ($data as $item)
                                 <input type="text" name="idProgres" value="{{ $item->id }}" class="border-red border-2 text-black" hidden>
                                 <input type="text" name="name" value="{{ Auth::user()->name }}" class="border-red border-2 text-black" hidden>

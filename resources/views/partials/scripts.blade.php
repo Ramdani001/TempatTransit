@@ -141,7 +141,7 @@ function evaluasiFunct(){
                 $(".totalRekapHarga").empty();
                 $("#printer").empty();
                 
-                $("#printer").append('<a href="/print/tahun/'+$tahun+'/0" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
+                $("#printer").append('<a target="_blank" href="/print/tahun/'+$tahun+'/0" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
 
                 response.filterTahun.forEach(function(data, index) {
                 $(".recordData").append('<div class="flex justify-between w-full px-4 border-b mb-3 isiTable'+ (index +1) +'"></div>');
@@ -224,7 +224,7 @@ function evaluasiFunct(){
                 $(".totalRekapHarga").empty();
                 $("#printer").empty();
                 
-                $("#printer").append('<a href="/print/bulan/'+$tahun+'/'+$bulan+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
+                $("#printer").append('<a target="_blank" href="/print/bulan/'+$tahun+'/'+$bulan+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
 
                 response.filterBulan.forEach(function(data, index) {
                 $(".recordData").append('<div class="flex justify-between w-full px-4 border-b mb-3 isiTable'+ (index +1) +'"></div>');
@@ -285,7 +285,7 @@ function evaluasiFunct(){
                 $(".totalRekapHarga").empty();
                 $("#printer").empty();
                 
-                $("#printer").append('<a href="/print/periode/'+$dateFrom+'/'+$dateTo+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
+                $("#printer").append('<a target="_blank" href="/print/periode/'+$dateFrom+'/'+$dateTo+'" class="bg-blue-700 hover:bg-blue-800 active:scale-95 px-4 py1 rounded shadow text-white text-xl">  Print </button>');
 
                 response.filterTanggal.forEach(function(data, index) {
                 $(".recordData").append('<div class="flex justify-between w-full px-4 border-b mb-3 isiTable'+ (index +1) +'"></div>');

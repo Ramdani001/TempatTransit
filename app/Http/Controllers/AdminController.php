@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\ProgresModels;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -283,6 +284,7 @@ class AdminController extends Controller
             )
             ->whereYear('project.created_at', $tahun)
             ->whereMonth('project.created_at', $bulan)
+            ->where('project.status', 'Done')
             ->get();
             
             // dd($filterBulan);
@@ -308,6 +310,7 @@ class AdminController extends Controller
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
             )
             ->whereRaw("DATE(project.created_at) BETWEEN ? AND ?", [$dateFrom, $dateTo])
+            ->where('project.status', 'Done')
             ->get();
 
             return response()->json([
@@ -340,16 +343,59 @@ class AdminController extends Controller
             ->whereYear('project.created_at', $value)
             ->get();
 
-            // $pdf = Pdf::loadView('pdf.invoice', $data);
+            $pdf = PDF::loadview('pages.print', compact('data', 'value', 'value1', 'status'));
+            $pdf->setPaper('A4', 'potrait');
 
-            // return $pdf->stream('Laporan.pdf');
+            return $pdf->stream('Rekap Data'.$status.'-'. $value .'.pdf');
 
-            return view('pages.print', \compact('data'));
+            // return view('pages.print', \compact('data', 'value', 'value1'));
 
         }else if($status == "bulan"){
-            dd($status, $value, $value1);
+
+            $data = Project::leftJoin('users', 'project.user_id', '=', 'users.id')
+            ->leftJoin('users as pm_users', 'project.pm_id', '=', 'pm_users.id')
+            ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
+            ->select(
+                'project.*', // Kolom dari tabel projects
+                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
+                'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
+                'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
+            )
+            ->whereYear('project.created_at', $value)
+            ->whereMonth('project.created_at', $value1)
+            ->where('project.status', 'Done')
+            ->get();
+
+            $pdf = PDF::loadview('pages.print', compact('data', 'value', 'value1', 'status'));
+            $pdf->setPaper('A4', 'potrait');
+
+            return $pdf->stream('Rekap Data'.$status.'-'. $value .'.pdf');
+
+            // return view('pages.print', \compact('data', 'value', 'value1', 'status'));
+
         }else if($status == "periode"){
-            dd($status, $value, $value1);
+
+            $data = Project::leftJoin('users', 'project.user_id', '=', 'users.id')
+            ->leftJoin('users as pm_users', 'project.pm_id', '=', 'pm_users.id')
+            ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
+            ->select(
+                'project.*', // Kolom dari tabel projects
+                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
+                'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
+                'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
+            )
+            ->whereRaw("DATE(project.created_at) BETWEEN ? AND ?", [$value, $value1])
+            ->where('project.status', 'Done')
+            ->get();
+
+            $pdf = PDF::loadview('pages.print', compact('data', 'value', 'value1', 'status'));
+            $pdf->setPaper('A4', 'potrait');
+
+            return $pdf->stream('Rekap Data'.$status.'-'. $value .'.pdf');
+
+            return view('pages.print', \compact('data', 'value', 'value1', 'status'));
         }
         
 
