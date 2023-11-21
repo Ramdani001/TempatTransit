@@ -47,7 +47,7 @@ class AdminController extends Controller
         if(Auth::user()->role == "Employee"){
             $projects = Project::where('user_id', Auth::user()->id)
             ->get();
-        }else if(Auth::user()->rol == "Project Manager"){
+        }else if(Auth::user()->role == "Project Manager"){
             $projects = Project::where('pm_id', Auth::user()->id)->get();
         }else{
             $projects = Project::all();
@@ -78,8 +78,17 @@ class AdminController extends Controller
         $clients = Client::where('status', 'Pending')->get();
         $roles = User::all();
         $rolesUser = User::first()->id;
-        // $users = Client::findOrFail();
-        return view('pages.approval', compact('clients', 'roles', 'rolesUser'));
+
+        $totpending = Project::where('status', 'Pending')
+        ->count();
+
+        $totprogres = Project::where('status', 'On Progress')
+        ->count();
+
+        $totdone = Project::where('status', 'Done')
+        ->count();
+
+        return view('pages.approval', compact('clients', 'roles', 'rolesUser', 'totpending', 'totprogres', 'totdone'));
     }
 
     public function client(){
@@ -89,6 +98,59 @@ class AdminController extends Controller
         $data = Project::where('status','Pending')->get();
         // dd($data);
         return view('pages.client', compact('clients', 'roles' , 'data'));
+    }
+
+    // Edit Client
+    public function editClient(Request $request){
+
+        $idClient = $request->id;
+
+
+        if($request->status == "getEdit"){
+            $dataClient = Client::where('id', $idClient)->first();
+
+            return response()->json([
+                'status'=> 200,
+                'dataClient' => $dataClient
+            ]);
+
+        }else if($request->status == "AksiEdit"){
+
+            // dd($request);
+
+            $affected = Client::where('id', $request->id_client)
+                        ->update([
+                            'name'=> $request->name,
+                            'phone'=> $request->phone,
+                            'email'=> $request->email,
+                            'address'=> $request->address,
+                            'details'=> $request->details,
+                            'prices'=> $request->prices,
+                            'updated_at'=> date('Y-m-d H:i:s')
+                            ]);
+            return back();
+        }else if($request->status == "getHapus"){
+
+            $idHapus = $request->idHapus;
+
+            $dataClient = Client::where('id', $idHapus)->first();
+
+            return response()->json([
+                'status'=> 200,
+                'dataClient' => $dataClient
+            ]);
+        }else if($request->status == "AksiHapus"){
+            $idSendDel = $request->idSendDel;
+
+            $project = Project::where("client_id", $idSendDel);
+            $Client = Client::where("id", $idSendDel);
+
+            $project->delete();
+            $Client->delete();
+
+            return back();
+        }
+
     }
 
     public function progres(){

@@ -49,6 +49,9 @@ Route::middleware(['auth'])->group(function(){
     // Filter Report Project
     Route::post('/admin/filterReport', [AdminController::class, 'filterReport'])->name('admin.filterReport');
     Route::get('/print/{status}/{value}/{value2}', [AdminController::class, 'print'])->name('admin.print');
+    
+    // Edit Client
+    Route::post('/admin/editClient', [AdminController::class, 'editClient'])->name('admin.editClient');
 
 
     // Logout

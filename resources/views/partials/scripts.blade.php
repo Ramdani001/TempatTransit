@@ -127,7 +127,7 @@ function evaluasiFunct(){
             var sendData = {
                 tahun: $tahun,
                 status: "Tahun",
-                _token: '{{ csrf_token() }}' 
+                _token: '{{ csrf_token() }}'
             };
 
             // Request Data
@@ -323,6 +323,59 @@ function evaluasiFunct(){
 
     });
 
+    $('#btnEditClient').on('click', function() {
+        console.log("Button Edit Client Active");
+
+        $id = $(this).val();
+
+        var sendData = { 
+            id : $id,
+            status : "getEdit",
+            _token: '{{ csrf_token() }}'
+         };
+
+        $.ajax({  
+            type: "POST",
+            data: sendData,
+            url: "/admin/editClient",
+            success: function(response){
+                console.log(response);
+
+
+                $('#id_client').val(response.dataClient.id);
+                $('#nameEdit').val(response.dataClient.name);
+                $('#emailEdit').val(response.dataClient.email);
+                $('#phoneEdit').val(response.dataClient.phone);
+                $('#pricesEdit').val(response.dataClient.prices);
+                $('#addressEdit').val(response.dataClient.address);
+                $('#detailsEdit').val(response.dataClient.details);
+
+            }
+        });
+    });
+
+    $('#btnHpusClient').on('click', function() {
+        console.log("Button Hapus Client Active");
+
+        $id = $(this).val();
+
+        var sendData = { 
+            idHapus : $id,
+            status : "getHapus",
+            _token: '{{ csrf_token() }}'
+         };
+
+        $.ajax({
+            type: "POST",
+            data: sendData,
+            url: "/admin/editClient",
+            success: function(response){
+                console.log(response);
+                $('#idSendDel').val(response.dataClient.id);
+            }
+        });
+        // idSendDel
+    });
     
 
 </script>

@@ -55,7 +55,6 @@
     <div class="recentOrders"> 
         <div class="cardHeader">
             <h2>Recent Order</h2>
-            <a href="#" class="btn">View All</a>
         </div>
         <table id="example" class="display" style="width:100%">
             <thead>
@@ -74,7 +73,29 @@
                 <td>{{$value->client->name}}</td>
                 <td>{{$value->client->details}}</td>
                 <td>{{$value->user->name}}</td>
-                <td>{{$value->status}}</td>
+
+
+                <td>
+                    @php
+                        $valueStat = $value->status;
+                    @endphp
+                    <button class="
+                    @if ($valueStat == "Requested")
+                        statRequested
+                    @elseif($valueStat == "On Progress")
+                        statProgres
+                    @elseif ($valueStat == "Done")
+                        statDone                        
+                    @elseif ($valueStat == "Rejected")
+                        statRejected    
+                    @endif " 
+                    type="submit"
+                    style="cursor: pointer;"
+                    disabled
+                >
+                    {{ $value->status; }}
+                </button>
+                </td>
                 {{-- <td>{{$value->status}}</td> --}}
                 {{-- <td><td> --}}
             </tr>

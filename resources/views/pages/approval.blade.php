@@ -9,8 +9,8 @@
                         <ion-icon name="mail-unread-outline" style="color: #10c0b1 !important"></ion-icon>
                     </div>
                     <div>
-                        {{-- Status Pending --}}
-                        <div class="numbers" >24</div> 
+                        {{-- Status Pending --}} 
+                        <div class="numbers" > {{ $totpending }} </div> 
                         <div class="cardName" >Approval Order</div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     </div>
                     <div>   
                         {{-- Status Requested --}}
-                        <div class="numbers" >24</div>
+                        <div class="numbers" > {{ $totprogres }} </div>
                         <div class="cardName" >Pending Order</div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     </div>
                     <div>   
                         {{-- Status Done --}}
-                        <div class="numbers" >24</div>
+                        <div class="numbers" > {{ $totdone }} </div>
                         <div class="cardName" >Complete Order</div>
                     </div>
                 </div>
