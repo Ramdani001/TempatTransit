@@ -7,7 +7,17 @@ export default {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "inter": ['inter', 'sans-serif'],
+        "Circular": ['Circular STD'],
+        "Staatliches": ['Staatliches'],
+        "Cera": ['Cera PRO Regular']
+      },
+      colors : {
+        "biru" : '#2FA0B1'
+      }
+    },
   },
   plugins: [],
 }

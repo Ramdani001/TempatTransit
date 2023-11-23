@@ -4,6 +4,31 @@
   width: 10px;
 }
 
+
+@layer base {
+  @font-face {
+  font-family: 'Circular STD';
+  src: url('/public/assets/fonts/CircularStd-Bold.woff') format('woff');
+  }
+  
+  @font-face {
+  font-family: 'Staatliches';
+  src: url('/public/assets/fonts/Staatliches-Regular.woff') format('woff');
+  }
+
+  @font-face {
+  font-family: 'Cera PRO Regular';
+  src: url('/public/assets/fonts/Cera-Pro-Regular.woff') format('woff');
+  }
+
+  html{
+      font-family: inter;
+  }
+  
+}
+
+
+
 @tailwind components;
 @tailwind utilities;
 

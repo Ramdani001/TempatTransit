@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SesiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SesiController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LandingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,10 +57,14 @@ Route::middleware(['auth'])->group(function(){
 
     // Logout
     Route::get('/logout', [SesiController::class, 'logout']);
-
+    
     // Insert Data
     Route::post('/addclient', [AdminController::class, 'store'])->name('pages.store');
     Route::post('/InsertProject', [AdminController::class, 'InsertProject']);
-
+    
+    
+    
     
 });
+// Landing Pages
+Route::get('/landing', [LandingController::class, 'index']);
