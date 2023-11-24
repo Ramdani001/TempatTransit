@@ -10,6 +10,14 @@
     --pending: #F7CB73;
 }
 
+.bg-transit{
+    background: var(--transit);
+}
+
+.bg-transit2{
+    background: var(--transit2);
+}
+
 body{
     min-height: 100vh;
     overflow-x: hidden;

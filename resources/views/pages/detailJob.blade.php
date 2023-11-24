@@ -119,8 +119,8 @@
                 <div class="mt-2 ">
                        @if ($progres->count() > 0)
                         @foreach ($progres as $item)
-                            @if ($item->deskripsi != null)
-                                <div class=" bg-gray-400/30 rounded-md w-full h-full p-1 mb-3 grid @if ($item->role == "Project Manager") shadow font-semibold bg-[#15233b] text-white @endif">
+                            @if ($item->deskripsi != null) 
+                                <div class=" bg-gray-400/30 rounded-md w-full h-full p-1 mb-3 grid @if ($item->role == "Project Manager") shadow font-semibold bg-transit text-white @endif">
 
                                     <div class="text-[#15233b] w-full p-1 @if ($item->role == "Project Manager") flex flex-row-reverse @else grid grid-cols-2 gap-3 @endif">
                                         <span class="w-full
