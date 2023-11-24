@@ -1,14 +1,16 @@
 <nav id="navbar" class="z-50 py-2 px-4 fixed top-0 w-full" x-data="{navOpen : true}">
     {{-- <div class="container mx-auto "> --}}
         <div class="flex justify-between">
-            <img src="{{ '/assets/img/Tempattransit-logo.png' }}" class="w-52 order-1 sm:order-2">
+            <a href="#hero">
+                <img src="{{ '/assets/img/Tempattransit-logo.png' }}" class="w-52 order-1 sm:order-2">
+            </a>
             <ion-icon @click="navOpen = ! navOpen" name="reorder-three" class="text-biru lg:hidden text-4xl order-2 sm:order-1"></ion-icon>
             <div class="order-2 self-center hidden lg:block">
                 <ul class="flex gap-16 ">
-                    <li class="text-white font-bold text-sm font-Circular"><a href="">About Us</a></li>
-                    <li class="text-white font-normal text-sm font-Circular opacity-50"><a href="">Prices</a></li>
-                    <li class="text-white font-normal text-sm font-Circular opacity-50"><a href="">Portofolio</a></li>
-                    <li class="text-white font-normal text-sm font-Circular opacity-50"><a href="">Partner</a></li>
+                    <li class="text-white font-bold text-sm font-Circular"><a href="#aboutUs">About Us</a></li>
+                    <li class="text-white font-normal text-sm font-Circular opacity-50"><a href="#prices">Prices</a></li>
+                    <li class="text-white font-normal text-sm font-Circular opacity-50"><a href="#portfolio">Portofolio</a></li>
+                    <li class="text-white font-normal text-sm font-Circular opacity-50"><a href="#partners">Partner</a></li>
                 </ul>
             </div>
             <div class="order-3 hidden sm:block">

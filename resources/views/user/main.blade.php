@@ -25,6 +25,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
    
     <style>
+        
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
         #mainContent {
         height: 100%;
@@ -58,11 +59,19 @@
           height: 100%;
           -webkit-box-reflect: below 1px linear-gradient(transparent,transparent, #0002, #0004);
         }
+
+        .bg-transit{
+            background:  #15233b;
+        }
+
+        .bg-transit2{
+            background: #19b3ca;
+        }
     
     </style>
 
 </head>
-<body class=" overflow-x-hidden">
+<body class=" overflow-x-hidden ">
     @include('user/partials/navbar')
 
     @yield('content')
@@ -124,8 +133,77 @@
                     $('#navbar').removeClass('backdrop-blur-sm');
                 }
             });
+
+          // Select all links with hashes
+          $('a[href*="#"]')
+            // Remove links that don't actually link to anything
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function(event) {
+              // On-page links
+              if (
+                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+                && 
+                location.hostname == this.hostname
+              ) {
+                // Figure out element to scroll to
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                // Does a scroll target exist?
+                if (target.length) {
+                  // Only prevent default if animation is actually gonna happen
+                  event.preventDefault();
+                  $('html, body').animate({
+                    scrollTop: target.offset().top
+                  }, 1300, function() {
+                    // Callback after animation
+                    // Must change focus!
+                    var $target = $(target);
+                    $target.focus();
+                    if ($target.is(":focus")) { // Checking if the target was focused
+                      return false;
+                    } else {
+                      $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                      $target.focus(); // Set focus again
+                    };
+                  });
+                }
+              }
+            });
+            
         });
 
+    </script>
+
+    <script> 
+      function changeProject(e){
+        if(e == "Up"){
+          $('#mainProject').addClass('-translate-y-[500%]');
+
+          var $mainProject2 = $('#mainProject2');
+
+          
+        // Menghapus kelas "hidden" dan menambahkan kelas "md:grid"
+        $('#mainProject2').removeClass('hidden');
+        $('#mainProject2').addClass('md:grid');
+        $('#mainProject2').removeClass('translate-y-[100%]');
+
+        setTimeout(function() {
+          $('#mainProject2').addClass('-translate-y-[100%]');
+        }, 100);
+        
+      }else{
+          $('#mainProject').removeClass('-translate-y-[500%]');
+          $('#mainProject2').removeClass('-translate-y-[100%]');
+          $('#mainProject2').addClass('translate-y-[100%]');
+
+          setTimeout(function() {
+            $('#mainProject2').addClass('hidden');
+            $('#mainProject2').removeClass('md:grid');
+          }, 1000);
+          
+        }
+      }
     </script>
 
 </body>

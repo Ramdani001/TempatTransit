@@ -1,4 +1,4 @@
-<div class="h-screen w-full bg-[#030312] flex pt-[10%] z-30 relative overflow-hidden">
+<div class="h-screen w-full bg-[#030312] flex pt-[10%] z-30 relative overflow-hidden" id="hero">
   <div class="relative max-w-4xl mx-auto pt-3 sm:pt-10 lg:pt-20">
     <h1 class="z-10 font-Cera text-white font-bold lg:text-[80px] lg:leading-[80px] sm:text-[56px] sm:leading[60px] text-[40px] leading[55px] text-center relative">
       Web and Apps Mobile

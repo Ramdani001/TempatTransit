@@ -115,7 +115,7 @@
 
         <div class="p-3">
             <h2 class="font-semibold">Progress Description</h2>
-            <div class="overflow-y-auto h-[350px]">
+            <div class="overflow-y-auto h-[350px]"> 
                 <div class="mt-2 ">
                        @if ($progres->count() > 0)
                         @foreach ($progres as $item)

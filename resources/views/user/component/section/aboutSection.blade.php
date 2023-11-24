@@ -1,4 +1,4 @@
-<div class="h-screen w-full bg-gray-200 z-30" style="
+<div id="aboutUs" class="h-screen w-full bg-gray-200 z-30" style="
   box-shadow: inset 0 -20px 10px -12px rgba(0, 0, 0, 0.5),
               inset 0 20px 5px -12px rgba(0, 0, 0, 0.5);
 ">
