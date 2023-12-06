@@ -8,7 +8,6 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\ProgresModels;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\AdminController;
 use PDF;
 
 class AdminController extends Controller
@@ -20,7 +19,7 @@ class AdminController extends Controller
     public function dashboard(){
         $clients = Client::all();
         
-        if(Auth::user()->role == "Employee" ){
+        if(Auth::user()->role == "Programmer" ){
             $totproject = Project::where('status', '!=', 'Rejected')
             ->where('user_id', Auth::user()->id)
             ->count();
@@ -44,7 +43,7 @@ class AdminController extends Controller
 
         $employees = User::where('id', '!=', 6)->count();
 
-        if(Auth::user()->role == "Employee"){
+        if(Auth::user()->role == "Programmer"){
             $projects = Project::where('user_id', Auth::user()->id)
             ->get();
         }else if(Auth::user()->role == "Project Manager"){
@@ -254,7 +253,7 @@ class AdminController extends Controller
         $insert = new ProgresModels;
         $insert-> project_id = $request->idUser;
         $insert-> deskripsi = $request->descJob;
-        $insert-> role = 'Employee';
+        $insert-> role = 'programmer';
         $insert-> name = $request->name;
         $insert->save();
 
@@ -305,6 +304,7 @@ class AdminController extends Controller
     public function reportProject(){
 
         $data = Project::all();
+        
 
         return view('pages.reportProject', \compact('data'));
     }
@@ -325,7 +325,7 @@ class AdminController extends Controller
             ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
             ->select(
                 'project.*', // Kolom dari tabel projects
-                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'users.name as programmer', // Kolom name dari tabel users, alias sebagai user_name
                 'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
                 'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
@@ -349,7 +349,7 @@ class AdminController extends Controller
             ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
             ->select(
                 'project.*', // Kolom dari tabel projects
-                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'users.name as programmer', // Kolom name dari tabel users, alias sebagai user_name
                 'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
                 'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
@@ -376,7 +376,7 @@ class AdminController extends Controller
             ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
             ->select(
                 'project.*', // Kolom dari tabel projects
-                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'users.name as programmer', // Kolom name dari tabel users, alias sebagai user_name
                 'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
                 'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
@@ -407,7 +407,7 @@ class AdminController extends Controller
             ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
             ->select(
                 'project.*', // Kolom dari tabel projects
-                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'users.name as programmer', // Kolom name dari tabel users, alias sebagai user_name
                 'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
                 'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
@@ -429,7 +429,7 @@ class AdminController extends Controller
             ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
             ->select(
                 'project.*', // Kolom dari tabel projects
-                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'users.name as programmer', // Kolom name dari tabel users, alias sebagai user_name
                 'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
                 'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name
@@ -453,7 +453,7 @@ class AdminController extends Controller
             ->leftJoin('tb_client', 'project.client_id', '=', 'tb_client.id')
             ->select(
                 'project.*', // Kolom dari tabel projects
-                'users.name as employee', // Kolom name dari tabel users, alias sebagai user_name
+                'users.name as programmer', // Kolom name dari tabel users, alias sebagai user_name
                 'pm_users.name as projectManager', // Kolom name dari tabel users (sebagai pmUser), alias sebagai pm_user_name
                 'tb_client.details as judulProject', // Kolom name dari tabel clients, alias sebagai client_name
                 'tb_client.prices as prices' // Kolom name dari tabel clients, alias sebagai client_name

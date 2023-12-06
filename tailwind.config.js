@@ -9,7 +9,6 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "inter": ['inter', 'sans-serif'],
         "Circular": ['Circular STD'],
         "Staatliches": ['Staatliches'],
         "Cera": ['Cera PRO Regular']

@@ -17,7 +17,7 @@
                 <span class="title"> Dashboard</span>
             </a>
         </li>
-        @if (Auth::user()->role == 'Employee')
+        @if (Auth::user()->role == 'Programmer')
         <li>
             <a href="/project">
                 <span class="icon"><ion-icon name="newspaper-outline"></ion-icon></span>
@@ -27,7 +27,7 @@
         @endif
         @if (Auth::user()->role == 'Project Manager')
         <li>
-            <a href="{{ route('admin.prgoresProject') }}">
+            <a href="{{ route('admin.progresProject') }}">
                 <span class="icon"><ion-icon name="map-outline"></ion-icon></span> 
                 <span class="title"> Project & Order</span>
             </a>

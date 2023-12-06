@@ -73,9 +73,9 @@
         </div>
        <div class="" id="fullTable">
         <table id="example" class="display" style="width:100%" >
+            
             <thead>
                 <tr>
-                    {{-- <th>No</th> --}}
                     <th>No</th>
                     <th>Nama Project</th>
                     <th>Project Manager</th>
@@ -84,29 +84,37 @@
                     <th>Harga</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody> 
+                @php
+                $counter = 1;
+                @endphp
+                
                 @foreach ($data as $item => $value)
                     @if ($value->status == "Done")
                         @php
                             $price = $value->client->prices;
+                            
                         @endphp
                         <tr>
-                            <td> {{ $item+1 }} </td>
+                            <td>{{$counter++}}</td>
                             <td>{{ $value->client->details }}</td>
                             <td>
-                                @if (!empty($value->pmUser->name))
+                                {{-- @if (!empty($value->pmUser->name)) --}}
                                     {{$value->pmUser->name }}
-                                @else
+                                {{-- @else
                                     -
-                                @endif
+                                @endif --}}
                             </td>
                             <td> {{ $value->user->name }} </td>
-                            <td>{{ date('d F Y', strtotime($value->created_at)) }}</td>
+                            <td>{{ date('d F Y', strtotime($value->updated_at)) }}</td>
 
                             <td>Rp. {{ number_format($price, 0, ',', '.') }}</td>
                         </tr>
+                       
                     @endif
+                    
                 @endforeach
+                
             </tbody>
            
         </table>
@@ -123,7 +131,7 @@
                 <div class="grid grid-rows border-b">
                     <div class="border-b mb-1 font-bold pb-2 flex justify-between px-4 text-left w-full">
                         <div class="w-[30%]">No</div>
-                        <div class="w-full">Project</div>
+                        <div class="w-full">Nama Project</div>
                         <div class="w-full">Project Manager</div>
                         <div class="w-full">Programmer</div>
                         <div class="w-full">Tanggal</div>
@@ -132,7 +140,6 @@
                     <div class="flex flex-col recordData"  id="">
                         <div class="flex justify-between w-full px-4">
                             
-                            {{-- Rp. {{ number_format($price, 0, ',', '.') }} --}}
                         </div>
                     </div>
                 </div>

@@ -173,12 +173,12 @@ function evaluasiFunct(){
                     console.log(formatDate(2023-11-23));
 
                     // Menambahkan elemen span ke dalam div menggunakan jQuery
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left w-[30%]" id="noFil">' + (index + 1) + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id=projectFil">' + data.judulProject + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.projectManager + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.employee + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formatDate(data.updated_at) + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formattedPrice  + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class=" text-left w-[30%]" id="noFil">' + (index + 1) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id=projectFil">' + data.judulProject + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + data.projectManager + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + data.programmer + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + formatDate(data.updated_at) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + formattedPrice  + '</span>');
                     totalPrices += Number(data.prices);
                 });
                 var formatTotalPrices = new Intl.NumberFormat('id-ID', {
@@ -236,12 +236,32 @@ function evaluasiFunct(){
                         currency: 'IDR'
                     }).format(data.prices);
 
+                    function formatDate(inputDate) {
+                        var date = new Date(inputDate);
+                        var month1 = ['January', 'February', 'March', 'April', 'May', 'Juny', 'July', 'August', 'September', 'October', 'November', 'December'];
+                        var day = date.getDate();
+                        var month = month1[date.getMonth()]; // Bulan dimulai dari 0, jadi tambahkan 1
+                        var year = date.getFullYear();
+
+                        // Format tanggal dan bulan agar selalu dua digit
+                        if (day < 10) {
+                            day = '0' + day;
+                        }
+                        if (month < 10) {
+                            month = '0' + month;
+                        }
+
+                        return day + '-' + month + '-' + year;
+                    }
+                    console.log(formatDate(2023-11-23));
+
                     // Menambahkan elemen span ke dalam div menggunakan jQuery
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left w-[30%]" id="noFil">' + (index + 1) + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id=projectFil">' + data.judulProject + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.projectManager + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.employee + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formattedPrice  + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class=" text-left w-[30%]" id="noFil">' + (index + 1) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id=projectFil">' + data.judulProject + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + data.projectManager + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + data.programmer + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + formatDate(data.updated_at) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + formattedPrice  + '</span>');
                     totalPrices += Number(data.prices);
                 });
                 var formatTotalPrices = new Intl.NumberFormat('id-ID', {
@@ -297,12 +317,32 @@ function evaluasiFunct(){
                         currency: 'IDR'
                     }).format(data.prices);
 
+                    function formatDate(inputDate) {
+                        var date = new Date(inputDate);
+                        var month1 = ['January', 'February', 'March', 'April', 'May', 'Juny', 'July', 'August', 'September', 'October', 'November', 'December'];
+                        var day = date.getDate();
+                        var month = month1[date.getMonth()]; // Bulan dimulai dari 0, jadi tambahkan 1
+                        var year = date.getFullYear();
+
+                        // Format tanggal dan bulan agar selalu dua digit
+                        if (day < 10) {
+                            day = '0' + day;
+                        }
+                        if (month < 10) {
+                            month = '0' + month;
+                        }
+
+                        return day + '-' + month + '-' + year;
+                    }
+                    console.log(formatDate(2023-11-23));
+
                     // Menambahkan elemen span ke dalam div menggunakan jQuery
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left w-[30%]" id="noFil ">' + (index + 1) + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id=projectFil">' + data.judulProject + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.projectManager + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + data.employee + '</span>');
-                    $(".isiTable"+(index + 1)+"").append('<span class="w-full text-left" id="projectManagerFil">' + formattedPrice  + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="  w-[30%]" id="noFil ">' + (index + 1) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id=projectFil">' + data.judulProject + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + data.projectManager + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + data.programmer + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + formatDate(data.updated_at) + '</span>');
+                    $(".isiTable"+(index + 1)+"").append('<span class="w-full " id="projectManagerFil">' + formattedPrice  + '</span>');
                     totalPrices += Number(data.prices);
                 });
                 var formatTotalPrices = new Intl.NumberFormat('id-ID', {

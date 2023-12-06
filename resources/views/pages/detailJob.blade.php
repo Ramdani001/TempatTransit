@@ -25,7 +25,7 @@
                         <td> : </td>
                         <td>
                             <select name="statusProject" id="statusProject" class="px-3" 
-                                    @if($role == "Employee")
+                                    @if($role == "Programmer")
                                         disabled
                                     @endif
                                 >
@@ -87,7 +87,7 @@
                             @endforeach
                             <input type="text" name="sendStatus" id="sendStatus" class="border" placeholder="Status Project" value="On Progress" hidden>
                         <textarea name="descJob" id="descJob" class="border shadow w-full placeholder:p-1 focus:p-1" placeholder="Masukan Pekerjaan Yang sedang Dilakukan Hari Ini"
-                        @if($role == "Employee")
+                        @if($role == "Programmer")
                             @if($item->status == "Done")
                                 readonly                     
                             @endif
@@ -95,13 +95,13 @@
                         ></textarea>
                         <div class="w-full flex justify-end">
                             <button class="bg-blue-900 px-5 py-1 mr-2 text-white font-semibold shadow rounded-md
-                            @if($role == "Employee")
+                            @if($role == "Programmer")
                                 @if($item->status == "Done")
                                     bg-gray-400
                                 @endif
                             @endif
                             "
-                            @if($role == "Employee")
+                            @if($role == "Programmer")
                                 @if($item->status == "Done")
                                     disabled                     
                                 @endif

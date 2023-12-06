@@ -14,7 +14,9 @@
                 </ul>
             </div>
             <div class="order-3 hidden sm:block">
-                <button class="grow font-bold text-white px-6 py-4  rounded-full text-sm">Login</button>
+                <a href="/logout">
+                    <button class="grow font-bold text-white px-6 py-4  rounded-full text-sm ">Login</button>
+                </a>
             </div>
         </div> 
         {{-- Navbar --}}

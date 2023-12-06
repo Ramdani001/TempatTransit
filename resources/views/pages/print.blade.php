@@ -83,6 +83,7 @@
             </tr>
             @php
                 $totalIncome = 0;
+                $counter = 1;
             @endphp
             @foreach ($data as $item => $value)
                 @if ($value->status == "Done")
@@ -90,10 +91,10 @@
                         $totalIncome += $value->prices;
                     @endphp
                     <tr id="body">
-                        <td>{{ $item }}</td>
+                        <td>{{ $counter++ }}</td>
                         <td> {{ $value->judulProject }} </td>
                         <td>{{ $value->projectManager }}</td>
-                        <td>{{ $value->employee }}</td>
+                        <td>{{ $value->programmer }}</td>
                         <td> {{ 'Rp ' . number_format($value->prices, 0, ',', '.') }} </td>
                     </tr>
                 @endif

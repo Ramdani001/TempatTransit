@@ -28,7 +28,7 @@ Route::get('/home', function(){
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin', [AdminController::class, 'dashboard']);
     Route::get('/admin/projectmanager', [AdminController::class, 'dashboard'])->middleware('userAkses:Project Manager');
-    Route::get('/admin/employee', [AdminController::class, 'dashboard'])->middleware('userAkses:Employee');
+    Route::get('/admin/programmer', [AdminController::class, 'dashboard'])->middleware('userAkses:Programmer');
     Route::get('/admin/marketing', [AdminController::class, 'dashboard'])->middleware('userAkses:Marketing');
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
     Route::get('/project', [AdminController::class, 'project']);
@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function(){
 
     // Route Pages
     Route::get('/admin/projectmanager/approvalclient', [AdminController::class, 'approval'])->name('pages.approval');
-    Route::get('/admin/projectmanager/progresProject', [AdminController::class, 'progres'])->name('admin.prgoresProject');
+    Route::get('/admin/projectmanager/progresProject', [AdminController::class, 'progres'])->name('admin.progresProject');
     Route::get('/admin/detailJob', [AdminController::class, 'detailJob'])->name('admin.detailJob');
     // Route::post('/admin/detailJob', [AdminController::class, 'detailJob'])->name('admin.detailJob');
 
